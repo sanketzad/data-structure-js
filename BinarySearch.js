@@ -157,6 +157,39 @@ class BinaryTree {
         return result;
     }
 
+    // ZigZag Traversal - Interview question in Oracle
+    zigzagTraversal(root) {
+        const result = [];
+        if (!root) return result;
+
+        const queue = [root];
+
+        let leftToRight = true;
+
+        while (queue.length) {
+            const levelSize = queue.length;
+            const currentLevel = [];
+
+            for(let i = 0; i < levelSize; i++) {
+                const node = queue.shift();
+                if (leftToRight) {
+                    currentLevel.push(node.value); 
+                } else {
+                    currentLevel.unshift(node.value);
+                }
+
+                if (node.left) queue.push(node.left);
+                if (node.right) queue.push(node.right);
+            }
+            // Toggle the direction for the next level
+            leftToRight = !leftToRight;
+            // Add the current level to the result
+            result.push(currentLevel);
+        }
+
+        return result;
+    }
+
     // Calculate the height of the tree
     // Iterative way
     heightIterative(root) {
@@ -231,6 +264,6 @@ console.log(BST);
 console.log("inorder", BST.inorder(BST.getRootNode()));
 console.log("preorder", BST.preorder(BST.getRootNode()));
 console.log("postorder", BST.postorder(BST.getRootNode()));
-
-console.log("Shift", [1,2,3,4,5].shift());
-console.log("Shift", [1,2,3,4,5].pop());
+console.log("ZigZag traversal", BST.zigzagTraversal(BST.getRootNode()));
+console.log("Height of the tree (Iterative):", BST.heightIterative(BST.getRootNode()));
+console.log("Height of the tree (Recursive):", BST.heightRecursive(BST.getRootNode()));
