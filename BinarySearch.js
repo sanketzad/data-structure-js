@@ -101,6 +101,97 @@ class BinaryTree {
         }
     }
 
+    search(node, value) {
+        // If the tree is emplty then return null
+        if (!node) {
+            return null;
+        }
+        // If the value is less than the node value then move t=o the left of the tree
+        else if (node.value > value) {
+            return this.search(node.left, value);
+        }
+        // If the value is more than node value then move to the right of the tree
+        else if (node.value < value) {
+            return this.search(node.right, value);
+        }
+        // If the value is equal to the node value then return the node
+        else {
+            return node;
+        }
+    }
+
+    // Tree Traversal
+    // Inorder Traversal
+    inorder(node){
+        const result = [];
+        if (node) {
+            result.push(...this.inorder(node.left));
+            result.push(node.value);
+            result.push(...this.inorder(node.right));
+        }
+
+        return result;
+    }
+
+    // Preorder Traversal
+    preorder(node) {
+        const result = [];
+        if (node) {
+            result.push(node.value);
+            result.push(...this.preorder(node.left));
+            result.push(...this.preorder(node.right));
+        }
+
+        return result;
+    }
+
+    // Postorder Traversal
+    postorder(node) {
+        const result = [];
+        if (node) {
+            result.push(...this.postorder(node.left));
+            result.push(...this.postorder(node.right));
+            result.push(node.value);
+        }
+
+        return result;
+    }
+
+    // Calculate the height of the tree
+    // Iterative way
+    heightIterative(root) {
+        if (!root) return 0;
+
+        let height = 0;
+        const queue = [root];
+
+        while (queue.length) {
+            let levelSize = queue.length;
+
+            for (let i = 0; i < levelSize; i++) {
+                let node = queue.shift();
+                if (node.left) queue.push(node.left);
+                if (node.right) queue.push(node.right);
+            }
+
+            // Increament the height of the tree after the each level is processed
+            height++;
+        }
+
+        return height;
+    }
+
+    // Calculate the height of the tree
+    // Recursive way
+    heightRecursive(root) {
+        if (!root) return 0;
+
+        const leftHeight = this.heightRecursive(root.left);
+        const rightHeight = this.heightRecursive(root.right);
+
+        return Math.max(leftHeight, rightHeight) + 1;
+    }
+
     // Helper function for the searching the node/data
     findMinNode(node) {
         // If left node is null then return the node
@@ -132,3 +223,14 @@ BST.insert(27);
 
 console.group(BST);
 console.group(BST.getRootNode());
+console.log("inorder", BST.inorder(BST.getRootNode()));
+console.log("preorder", BST.preorder(BST.getRootNode()));
+console.log("postorder", BST.postorder(BST.getRootNode()));
+console.log(BST.remove(15));
+console.log(BST);
+console.log("inorder", BST.inorder(BST.getRootNode()));
+console.log("preorder", BST.preorder(BST.getRootNode()));
+console.log("postorder", BST.postorder(BST.getRootNode()));
+
+console.log("Shift", [1,2,3,4,5].shift());
+console.log("Shift", [1,2,3,4,5].pop());
