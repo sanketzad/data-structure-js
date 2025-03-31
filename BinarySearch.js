@@ -190,6 +190,168 @@ class BinaryTree {
         return result;
     }
 
+    depthFirstSearch(root) {
+        const result = [];
+        if (!root) return result;
+
+        const stack = [root];
+
+        while (stack.length) {
+            const node = stack.pop();
+            result.push(node.value);
+
+            if (node.right) stack.push(node.right);
+            if (node.left) stack.push(node.left);
+        }
+
+        return result;
+    }
+
+    depthFirstSearchRecursive(root, result = []) {
+        if (!root) return result;
+
+        result.push(root.value);
+        this.depthFirstSearchRecursive(root.left, result);
+        this.depthFirstSearchRecursive(root.right, result);
+
+        return result;
+    }
+
+    // Breadth First Search
+    // Iterative Way - Only way to do the BFS as recursive solution uses stack to get hold of the nodes, it would be difficult to implement
+    // Recursive way - Not possible as it uses stack to get hold of the nodes, it would be difficult to implement
+    // BFS is used to find the shortest path in the graph
+    breadthFirstSearch(root) {
+        const result = [];
+
+        if (!root) return result;
+
+        const queue = [root];
+
+        while (queue.length) {
+            const node = queue.shift();
+            result.push(node.value);
+
+            // Add the left and right child to the queue
+            if (node.left) queue.push(node.left);
+            if (node.right) queue.push(node.right);
+        }
+
+        return result;
+    }
+
+    // Tree Includes Problem
+    // Check if the tree includes the given value
+    // Breadth First Search
+    includesBFS(root, value) {
+        if (!root) return false;
+
+        const queue = [root];
+
+        while (queue.length) {
+            const node = queue.shift();
+            if (node.value === value) return true;
+
+            if (node.left) queue.push(node.left);
+            if (node.right) queue.push(node.right);
+        }
+
+        return false;
+    }
+
+    // Tree Includes Problem
+    // Check if the tree includes the given value
+    // Depth First Search - Recursive
+    includesDFSRecursive(root, value) {
+        if (!root) return false;
+
+        if (root.value === value) return true;
+
+        return this.includesDFSRecursive(root.left, value) || this.includesDFSRecursive(root.right, value);
+    }
+
+    // Tree Sum Problem
+    // Calculate the sum of all the nodes in the tree
+    // Iterative way
+    treeSumIterative (root) {
+        if (!root) return 0;
+
+        let sum = 0;
+        const stack = [root];
+
+        while (stack.length) {
+            const node = stack.pop();
+            sum += node.value;
+
+            if (node.left) stack.push(node.left);
+            if (node.right) stack.push(node.right);
+        }
+
+        return sum;
+    }
+
+    // Calculate the sum of all the nodes in the tree
+    // Recursive way
+    treeSumRecursive (root) {
+        if (!root) return 0;
+
+        return root.value + this.treeSumRecursive(root.left) + this.treeSumRecursive(root.right);
+    }
+
+    // Tree Minimum Value Problem
+    // Find the minimum value in the tree
+    // Iterative way
+    // DFS
+    findMinimumValueIterative (root) {
+        if (!root) return null;
+
+        let minimum = Infinity;
+        const stack = [root];
+
+        while (stack.length) {
+            const node = stack.pop();
+
+            if (node.value < minimum) minimum = node.value;
+
+            if (node.left) stack.push(node.left);
+            if (node.right) stack.push(node.right);
+        }
+
+        return minimum;
+    }
+
+    // Find the minimum value in the tree
+    // Recursive way
+    // DFS
+    findMinimumValueRecursive (root) {
+        if (!root) return Infinity;
+
+        const leftMin = this.findMinimumValueRecursive(root.left);
+        const rightMin = this.findMinimumValueRecursive(root.right);
+
+        return Math.min(root.value, leftMin, rightMin);
+    }
+
+    // Find Minimum vakue in tree
+    // BFS
+    findMinimumValueBFS (root) {
+        if (!root) return null;
+
+        let minimum = Infinity;
+        const queue = [root];
+
+        while (queue.length) {
+            const node = queue.shift();
+
+            if (node.value < minimum) minimum = node.value;
+
+            if (node.left) queue.push(node.left);
+            if (node.right) queue.push(node.right);
+        }
+
+        return minimum;
+    }
+
     // Calculate the height of the tree
     // Iterative way
     heightIterative(root) {
@@ -225,6 +387,19 @@ class BinaryTree {
         return Math.max(leftHeight, rightHeight) + 1;
     }
 
+    // Max sum of path to the leaf node
+    // Find the maximum sum of the path to the leaf nodes
+    maxSumToLeaf (root) {
+        if (!root) return -Infinity;
+
+        if (!root.left && !root.right) return root.value;
+
+        const leftMax = this.maxSumToLeaf(root.left);
+        const rightMax = this.maxSumToLeaf(root.right);
+
+        return root.value + Math.max(leftMax, rightMax);
+    }
+
     // Helper function for the searching the node/data
     findMinNode(node) {
         // If left node is null then return the node
@@ -240,6 +415,8 @@ class BinaryTree {
         return this.root;
     }
 };
+
+// https://www.linkedin.com/posts/anmol-agarwal-674a21166_react-frontend-interview-activity-7311977456570155008-2AMb?utm_source=share&utm_medium=member_desktop&rcm=ACoAABCOuyABfXiZesTw1ME7ODvVstWjCIIIVTs
 
 const BST = new BinaryTree();
 
@@ -265,5 +442,15 @@ console.log("inorder", BST.inorder(BST.getRootNode()));
 console.log("preorder", BST.preorder(BST.getRootNode()));
 console.log("postorder", BST.postorder(BST.getRootNode()));
 console.log("ZigZag traversal", BST.zigzagTraversal(BST.getRootNode()));
+console.log("Depth First Search traversal", BST.depthFirstSearch(BST.getRootNode()));
+console.log("Depth First Search recursive traversal", BST.depthFirstSearchRecursive(BST.getRootNode()));
+console.log("Breadth First Search traversal", BST.breadthFirstSearch(BST.getRootNode()));
+console.log("Tree includes 10?", BST.includesBFS(BST.getRootNode(), 10));
+console.log("Tree includes 15?", BST.includesBFS(BST.getRootNode(), 15));
+console.log("Tree Sum (Iterative):", BST.treeSumIterative(BST.getRootNode()));
+console.log("Tree Sum (Recursive):", BST.treeSumRecursive(BST.getRootNode()));
+console.log("Minimum Value (Iterative):", BST.findMinimumValueIterative(BST.getRootNode()));
+console.log("Minimum Value (Recursive):", BST.findMinimumValueRecursive(BST.getRootNode()));
+console.log("Minimum Value (BFS):", BST.findMinimumValueBFS(BST.getRootNode()));
 console.log("Height of the tree (Iterative):", BST.heightIterative(BST.getRootNode()));
 console.log("Height of the tree (Recursive):", BST.heightRecursive(BST.getRootNode()));
