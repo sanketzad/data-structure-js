@@ -1,0 +1,20 @@
+{
+  "name": "data-structure",
+  "version": "1.0.0",
+  "description": "Data structure implementation in JavaScript",
+  "main": "BinarySearch.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com-personal:sanketzad/data-structure-js.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "murmurhash": "^2.0.1"
+  }
+}

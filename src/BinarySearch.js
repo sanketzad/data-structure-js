@@ -74,7 +74,7 @@ class BinaryTree {
             return node;
         }
         // If the value is same as the node value then remove the node
-        else {
+        else if (node.value === value) {
             // Deleting the node with no children
             if (!node.left && !node.right) {
                 node = null;
@@ -97,6 +97,8 @@ class BinaryTree {
             node.value = minNode.value;
             // Remove the minimum node from the right subtree
             node.right = this.removeNode(node.right, minNode.value);
+            return node;
+        } else {
             return node;
         }
     }
@@ -436,7 +438,7 @@ console.group(BST.getRootNode());
 console.log("inorder", BST.inorder(BST.getRootNode()));
 console.log("preorder", BST.preorder(BST.getRootNode()));
 console.log("postorder", BST.postorder(BST.getRootNode()));
-console.log(BST.remove(15));
+console.log("BST Remove", BST.remove(15));
 console.log(BST);
 console.log("inorder", BST.inorder(BST.getRootNode()));
 console.log("preorder", BST.preorder(BST.getRootNode()));
