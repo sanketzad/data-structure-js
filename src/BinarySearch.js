@@ -402,6 +402,34 @@ class BinaryTree {
         return root.value + Math.max(leftMax, rightMax);
     }
 
+    // Print leaf nodes of the tree
+    printLeafNodes (root, result = []) {
+        if (!root) return result;
+
+        if (!root.left && !root.right) {
+            result.push(root.value);
+        }
+
+        if (root.right !== null) this.printLeafNodes(root.right, result);
+        if (root.left !== null) this.printLeafNodes(root.left, result);
+
+        return result;
+    }
+
+    // Priont leaf nodes of the tree but one level up the leaf node
+    printLeafNodesOneLeveUp (root, result = []) {
+        if (!root) return result;
+        
+        if ((root.left && !root.left.left && !root.left.right) || (root.right && !root.right.left && !root.right.right)) {
+            result.push(root.value);
+        }
+
+        if (root.left !== null) this.printLeafNodesOneLeveUp(root.left, result);
+        if (root.right !== null) this.printLeafNodesOneLeveUp(root.right, result);
+
+        return result;
+    }
+
     // Helper function for the searching the node/data
     findMinNode(node) {
         // If left node is null then return the node
@@ -456,3 +484,5 @@ console.log("Minimum Value (Recursive):", BST.findMinimumValueRecursive(BST.getR
 console.log("Minimum Value (BFS):", BST.findMinimumValueBFS(BST.getRootNode()));
 console.log("Height of the tree (Iterative):", BST.heightIterative(BST.getRootNode()));
 console.log("Height of the tree (Recursive):", BST.heightRecursive(BST.getRootNode()));
+console.log("Print leaf nodes:", BST.printLeafNodes(BST.getRootNode()));
+console.log("Print leaf nodes one level up:", BST.printLeafNodesOneLeveUp(BST.getRootNode()));

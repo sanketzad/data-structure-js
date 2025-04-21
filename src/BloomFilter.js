@@ -46,12 +46,11 @@ class BloomFilter {
         for (let i = 0; i < this.hashCount; i++) {
             const index = hashes[i] % this.size;
             if (this.bitArray[index] === 0) return false;
-
-            // Check if the data is in the database - Because the bloom filter is not 100% accurate. It is possible that bloom filter can provide FALSE POSITIVE but never FALSE NEGATIVE.
-            // So we need to check if the data is in the database
-            if (DATABASE.includes(data)) {
-                return true;
-            }
+        }
+        // Check if the data is in the database - Because the bloom filter is not 100% accurate. It is possible that bloom filter can provide FALSE POSITIVE but never FALSE NEGATIVE.
+        // So we need to check if the data is in the database
+        if (DATABASE.includes(data)) {
+            return true;
         }
     }
 }

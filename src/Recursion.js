@@ -67,6 +67,18 @@ function fibonacci (num) {
     return fibonacci(num - 1) + fibonacci(num - 2);
 }
 
+// Memoization - store the result of the already comuputed values
+function fibonacciMemoization (num, memo = new Map()) {
+    if (num <= 1) return num;
+
+    if (memo.has(num)) return memo.get(num);
+
+    const result = fibonacciMemoization(num - 1, memo) + fibonacciMemoization(num - 2, memo);
+    memo.set(num, result);
+
+    return result;
+}
+
 // Merge sort using recursion - divide and conquer
 function mergeSort (list, start, end) {
     if (start >= end) return;
@@ -107,6 +119,67 @@ function merge (list, start, mid, end) {
     for (i = start; i <= end; i++) {
         list[i] = temp[i - start];
     }
+}
+
+// Merge 2 sorted LinkedList
+function mergeList (list1, list2) {
+    if (list1 === null) return list2;
+    if (list2 === null) return list1;
+
+    if (list1.value < list2.value) {
+        list1.next = mergeList(list1.next, list2)
+        return list1;
+    } else {
+        list2.next = mergeList(list1, list2.next);
+        return list2;
+    }
+}
+
+// Insert a node in Binary Search Tree
+function insertNode (root, node) {
+    if (root === null) return node;
+
+    if (node.value < root.value) {
+        root.left = insertNode(root.left, node);
+    } else {
+        root.right = insertNode(root.right, node);
+    }
+
+    return root;
+}
+
+// Print all the leaf nodes of a binary tree
+function printLeafNodes (node, result = []) {
+    if  (node === null) return result;
+
+    if (node.left === null && node.right === null) {
+        result.push(node.value);
+    }
+
+    printLeafNodes(node.left, result);
+    printLeafNodes(node.right, result);
+
+    return result;
+}
+
+// Depth FIrst Search in Graph to find the node
+function depthFirstSearchGraph (graph, node, visited = new Set()) {
+    if (graph === null || node === null) return false;
+
+    if (graph.value === node.value) return true;
+
+    for (let i = 0; i < graph.adjacents.length; i++) {
+        const adjacent = graph.adjacents[i];
+
+        if (!visited.has(adjacent.value)) {
+            visited.add(adjacent.value);
+            if (depthFirstSearchGraph(adjacent, node, visited)) {
+                return true;
+            }
+        }
+    }
+
+    return false;
 }
 
 console.log(reverseString("hello world")); // "olleh"
