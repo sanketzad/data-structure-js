@@ -444,6 +444,24 @@ class BinaryTree {
     getRootNode() {
         return this.root;
     }
+
+    /**
+     * Check if the binary tree us vaklid BST
+     * @param {object} root
+     * @returns {boolean}
+     */
+    isValidBST(root) {
+        if (!root) return true;
+
+        const isValid = (root, min=-Infinity, max=Infinity) => {
+            if (!root) return true;
+            if (!(min < root.value && root.value < max)) return false;
+
+            return isValid(root.left, min, root.value) && isValid(root.right, root.value, max);
+        }
+
+        return isValid(root);
+    }
 };
 
 // https://www.linkedin.com/posts/anmol-agarwal-674a21166_react-frontend-interview-activity-7311977456570155008-2AMb?utm_source=share&utm_medium=member_desktop&rcm=ACoAABCOuyABfXiZesTw1ME7ODvVstWjCIIIVTs
@@ -462,6 +480,7 @@ BST.insert(9);
 BST.insert(27);
 
 console.group(BST);
+console.log("Is valid BST:", BST.isValidBST(BST.getRootNode()));
 console.group(BST.getRootNode());
 console.log("inorder", BST.inorder(BST.getRootNode()));
 console.log("preorder", BST.preorder(BST.getRootNode()));

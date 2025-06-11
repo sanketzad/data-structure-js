@@ -182,6 +182,42 @@ function depthFirstSearchGraph (graph, node, visited = new Set()) {
     return false;
 }
 
+function factorialRecursive (num) {
+    if (num <= 1) return 1;
+
+    return num * factorialRecursive(num - 1);
+}
+
+function factorialIterative (num) {
+    let result = 1;
+
+    for (let i = 1; i <= num; i++) {
+        result *= i;
+    }
+
+    return result;
+}
+
+function fibonacciIterative (num) {
+    if (num <= 1) return num;
+
+    let a = 0, b = 1, c;
+
+    for (let i = 2; i <= num; i++) {
+        c = a + b;
+        a = b;
+        b = c;
+    }
+
+    return b;
+}
+
+function fibonacciRecursive(num) {
+    if (num <= 1) return num;
+
+    return fibonacciRecursive(num - 1) + fibonacciRecursive(num - 2);
+}
+
 console.log(reverseString("hello world")); // "olleh"
 console.log(isPalindrome("racecar")); // true
 console.log(isPalindrome("hello")); // false
