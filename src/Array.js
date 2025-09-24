@@ -1,3 +1,5 @@
+// This is a new comment
+
 class MyArray {
     constructor() {
         this.length = 0;
